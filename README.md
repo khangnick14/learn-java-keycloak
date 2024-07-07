@@ -28,6 +28,38 @@ The following guides illustrate how to use some features concretely:
 * [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
 * [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
 
+### CONFIGURATION 
+- KeyCloak server configuration:
+  - REALM: `NickApplication`
+  - Clients: `external-client`
+    - valid redirect URIs: `http://localhost:8090/*` (server host + port) 
+    - roles: admin & user
+  - Users:
+    - user1: admin role
+    - user2: user role
+    - user3: both admin & user role
+  - Notes:
+    - To avoid error **"Account is not fully set up"**, I will turn off the `Verify Profile` actions inside **Authentication** settings -> *Required actions tab*
+
+- To get the `token_enpoint`, navigate to **Realm Settings -> OpenID Endpoint Configuration** then get the value from `token_endpont`. In my case, it is: http://localhost:8080/realms/NickApplication/protocol/openid-connect/token
+- Need to setup to request body to get the token:
+  - `grant_type`: `password`
+  - `client_id`: `external-client`
+  - `username`: `user1`
+  - `password`: `1234`
+
+- After get the token, input to `Authorization` with BearerToken
+### DEMO
+- 2 containers: 
+![img.png](images/img.png)
+
+- KeyCloak server: `localhost:8080/admin`
+- App server: `localhost:8090`
+- 3 APIs endpoints: 
+  - `/api/nick`: public access
+  - `/api/admin`: only admin access
+  - `/api/user`: only user can access
+
 ### Additional Links
 These additional references should also help you:
 
