@@ -29,6 +29,8 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
     ports:
       - "8080:8080"
+    volumes:
+      - /Users/nick/docker_volumes/keycloak:/opt/keycloak/data
     depends_on:
       postgres:
         condition: service_healthy

@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: ms-nick-keycloak
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/NickApplication
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+  docker:
+    compose:
+      file: src/main/java/com/nick/ms_nick_keycloak/docker/docker-compose.yaml
+
+logging:
+    level:
+      org:
+        springframework:
+          security: DEBUG
+
+server:
+  port: 8090
+
+jwt:
+  auth:
+    converter:
+      resource-id: external-client
+      principal-attribute: principal_username
+
+
